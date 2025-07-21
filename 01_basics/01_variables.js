@@ -8,3 +8,4 @@ let accountState;
 console.log(accountId);
 
 console.table([accountId, accountEmail, accountPass, accountCity, accountState]);
+console.warn("This is a warning message");
