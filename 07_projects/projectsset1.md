@@ -5,7 +5,7 @@
 
 # Solution code
 
-## project 1
+## project 1 Solution Code
 ``` JavaScript
 const buttons = document.querySelectorAll('.button');
 const body = document.querySelector('body');
@@ -40,7 +40,8 @@ buttons.forEach(function (button) {
 });
 ```
 
-## project 2
+
+## project 2 Solution Code
 ``` JavaScript
 const form = document.querySelector('form');
 
@@ -68,4 +69,16 @@ form.addEventListener('submit', function (e) {
     }
   }
 });
+```
+
+
+## project 2 Solution Code
+``` JavaScript
+const clock = document.getElementById('clock');
+// const clock = document.querySelector('#clock');
+
+setInterval(function () {
+  let date = new Date();
+  clock.innerHTML = date.toLocaleTimeString();
+}, 1000);
 ```
