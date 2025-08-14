@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Advanced Event Properties Explorer</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .highlight { outline: 3px dashed crimson; position: relative; }
+    .tooltip {
+      position: absolute; background: rgba(0,0,0,0.7); color: white;
+      padding: 3px 6px; border-radius: 3px; font-size: 12px;
+      pointer-events: none; top: -25px; left: 0;
+    }
+    #scrollable {
+      width: 100%; height: 120px; overflow-y: scroll;
+      background: #f0f0f0; margin-bottom: 20px;
+    }
+    #scrollable div { height: 30px; padding: 5px; border-bottom: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>Advanced Event Properties Explorer</h1>
+  <form id="testForm">
+    <input type="text" name="textField" placeholder="Type & Submit" /><button type="submit">Submit</button>
+  </form>
+  <select id="selectField">
+    <option value="">Select one</option>
+    <option value="A">Option A</option>
+    <option value="B">Option B</option>
+  </select>
+  <div id="focusContainer">
+    <input type="text" placeholder="Focusin/out demo" />
+  </div>
+  <div id="scrollable">
+    <div>Item 1</div><div>Item 2</div><div>Item 3</div><div>Item 4</div><div>Item 5</div>
+  </div>
+  <button id="addButton">Add Dynamic Button</button>
+  <div id="buttonContainer"></div>
+
+  <pre id="log" style="white-space: pre-wrap; background: #fafafa; padding: 10px; border: 1px solid #ddd; max-height: 300px; overflow-y: auto;"></pre>
+
+  <script>
+    const log = document.getElementById('log');
+
+    function logEvent(e) {
+      const el = e.target;
+      const ct = e.currentTarget;
+      const msg = `[${e.type}] time: ${e.timeStamp.toFixed(1)}ms | target: ${el.tagName}${el.id?'#'+el.id:''} | currentTarget: ${ct.tagName}${ct.id?'#'+ct.id:''} | defaultPrevented: ${e.defaultPrevented}`;
+      log.textContent += msg + '\\n';
+      log.scrollTop = log.scrollHeight;
+      highlight(el, e.type);
+    }
+
+    function highlight(el, type) {
+      el.classList.add('highlight');
+      const tooltip = document.createElement('span');
+      tooltip.className = 'tooltip';
+      tooltip.innerText = type;
+      el.appendChild(tooltip);
+      setTimeout(() => {
+        el.classList.remove('highlight');
+        tooltip.remove();
+      }, 800);
+    }
+
+    window.addEventListener('resize', logEvent);
+    window.addEventListener('wheel', logEvent, { passive: true });
+
+    document.getElementById('testForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      logEvent(e);
+    });
+
+    document.getElementById('selectField').addEventListener('change', logEvent);
+    document.getElementById('focusContainer').addEventListener('focusin', logEvent);
+    document.getElementById('focusContainer').addEventListener('focusout', logEvent);
+
+    document.getElementById('addButton').addEventListener('click', function() {
+      const btn = document.createElement('button');
+      btn.textContent = 'Dyn Btn';
+      document.getElementById('buttonContainer').appendChild(btn);
+    });
+
+    document.body.addEventListener('click', function(e) {
+      logEvent(e);
+      if (e.target.tagName === 'BUTTON') {
+        console.log('Delegated: clicked button', e.target.textContent);
+      }
+    }, true); // capturing phase
+  </script>
+</body>
+</html>
