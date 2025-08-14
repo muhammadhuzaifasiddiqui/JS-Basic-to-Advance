@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Event Properties Deep Dive</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    #hoverBox {
+      width: 200px; height: 200px; background: lightblue;
+      margin-top: 20px; display: flex; align-items: center; justify-content: center;
+    }
+    #log {
+      white-space: pre-wrap;
+      background: #f4f4f4;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-top: 20px;
+      max-height: 300px;
+      overflow-y: scroll;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>JavaScript Event Property Exploration</h2>
+
+  <button id="actionBtn">Click Me (Try Alt/Ctrl/Shift)</button><br><br>
+  <input type="text" id="textInput" placeholder="Type here..." /><br><br>
+
+  <div id="hoverBox">Hover over me</div>
+
+  <div id="log">Event Log:\n</div>
+
+  <script>
+    const log = document.getElementById("log");
+
+    function logEventDetails(e) {
+      log.innerText += `
+=========================
+Event Type: ${e.type}
+Time: ${e.timeStamp.toFixed(2)}ms since page load
+Target: ${e.target.tagName}
+CurrentTarget: ${e.currentTarget.tagName}
+Client (X,Y): (${e.clientX}, ${e.clientY})
+Screen (X,Y): (${e.screenX}, ${e.screenY})
+AltKey: ${e.altKey} | CtrlKey: ${e.ctrlKey} | ShiftKey: ${e.shiftKey}
+Default Prevented: ${e.defaultPrevented}
+Key Pressed: ${e.key || 'N/A'} | Code: ${e.code || 'N/A'} | keyCode: ${e.keyCode || 'N/A'}
+=========================\n`;
+    }
+
+    // 🖱️ CLICK EVENT (with modifier keys)
+    document.getElementById("actionBtn").addEventListener("click", function(e) {
+      logEventDetails(e);
+    });
+
+    // ⌨️ KEYDOWN EVENT on input
+    document.getElementById("textInput").addEventListener("keydown", function(e) {
+      // Prevent typing letter 'x' just for demo
+      if (e.key === 'x' || e.key === 'X') {
+        e.preventDefault(); // This sets defaultPrevented = true
+      }
+      logEventDetails(e);
+    });
+
+    // 🐭 MOUSEOVER EVENT
+    document.getElementById("hoverBox").addEventListener("mouseover", function(e) {
+      logEventDetails(e);
+    });
+  </script>
+</body>
+</html>
