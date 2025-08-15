@@ -1,21 +1,12 @@
 # Projects related to DOM
 
 ## project link
-<<<<<<< HEAD
-
-=======
->>>>>>> e317aae7cf4f50d4920200e1e10d9f0084080e36
 [Click here](https://stackblitz.com/edit/dom-project-chaiaurcode?file=index.html)
 
 # Solution code
 
 ## project 1 Solution Code
-<<<<<<< HEAD
-
-```JavaScript
-=======
 ``` JavaScript
->>>>>>> e317aae7cf4f50d4920200e1e10d9f0084080e36
 const buttons = document.querySelectorAll('.button');
 const body = document.querySelector('body');
 
@@ -49,15 +40,9 @@ buttons.forEach(function (button) {
 });
 ```
 
-<<<<<<< HEAD
-## project 2 Solution Code
-
-```JavaScript
-=======
 
 ## project 2 Solution Code
 ``` JavaScript
->>>>>>> e317aae7cf4f50d4920200e1e10d9f0084080e36
 const form = document.querySelector('form');
 
 form.addEventListener('submit', function (e) {
@@ -86,15 +71,9 @@ form.addEventListener('submit', function (e) {
 });
 ```
 
-<<<<<<< HEAD
-## project 3 Solution Code
-
-```JavaScript
-=======
 
 ## project 3 Solution Code
 ``` JavaScript
->>>>>>> e317aae7cf4f50d4920200e1e10d9f0084080e36
 const clock = document.getElementById('clock');
 // const clock = document.querySelector('#clock');
 
@@ -104,15 +83,9 @@ setInterval(function () {
 }, 1000);
 ```
 
-<<<<<<< HEAD
-## project 4 Solution Code
-
-```JavaScript
-=======
 
 ## project 4 Solution Code
 ``` JavaScript
->>>>>>> e317aae7cf4f50d4920200e1e10d9f0084080e36
 let randomNumber = parseInt(Math.random() * 100 + 1);
 const submit = document.querySelector('#subt');
 const userInput = document.querySelector('#guessField');
@@ -204,8 +177,61 @@ function newGame() {
     playGame = true;
   });
 }
-<<<<<<< HEAD
 ```
-=======
+
+
+## project 5 Solution Code
+``` JavaScript
+const insert = document.getElementById('insert');
+window.addEventListener('keydown', (e) => {
+  insert.innerHTML = `
+    <div class='color'>
+    <table>
+    <tr>
+      <th>Key</th>
+      <th>Keycode</th> 
+      <th>Code</th>
+    </tr>
+    <tr>
+      <td>${e.key === ' ' ? 'Space' : e.key}</td>
+      <td>${e.keyCode}</td> 
+      <td>${e.code}</td>
+    </tr>
+  </table>
+    </div>
+  `;
+});
 ```
->>>>>>> e317aae7cf4f50d4920200e1e10d9f0084080e36
+
+
+## project 6 Solution Code
+``` JavaScript
+//generate a random color
+
+const randomColor = function () {
+  const hex = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += hex[Math.floor(Math.random() * 16)];
+  }
+  return color;
+};
+
+let intervalId;
+const startChangingColor = function () {
+  if (!intervalId) {
+    intervalId = setInterval(changeBgColor, 1000);
+  }
+  function changeBgColor() {
+    document.body.style.backgroundColor = randomColor();
+  }
+};
+
+const stopChangingColor = function () {
+  clearInterval(intervalId);
+  intervalId = null;
+};
+
+document.querySelector('#start').addEventListener('click', startChangingColor);
+document.querySelector('#stop').addEventListener('click', stopChangingColor);
+```
