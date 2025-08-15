@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="getData">Click Me!</button>
+</body>  
+<script>
+document.getElementById('getData').addEventListener('click', function () {
+    const requestUrl = 'https://api.github.com/users/hiteshchoudhary';
+    const xhr = new XMLHttpRequest();
+
+    xhr.open('GET', requestUrl);
+    
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const data = JSON.parse(this.responseText);
+
+            // Create and set image
+            const img = document.createElement('img');
+            img.src = data.avatar_url; // Better: use dynamic value, not hardcoded URL
+            img.alt = data.name || 'GitHub User';
+
+            // Create and set followers count
+            const followerCount = document.createElement('p');
+            followerCount.textContent = `Followers: ${data.followers}`;
+
+            // Append to body
+            document.body.appendChild(img);
+            document.body.appendChild(followerCount);
+
+            console.log(data.avatar_url);
+            console.log(data.followers);
+        }
+    };
+
+    xhr.send();
+});
+
+
+
+
+    // const requestUrl = 'https://api.github.com/users/hiteshchoudhary';
+    // const xhr = new XMLHttpRequest();
+    // xhr.open('GET', requestUrl);
+
+    // document.getElementById('getData').addEventListener('click', function () {
+    // xhr.onreadystatechange = function () {
+    // console.log(xhr.readyState);  
+    //     if(xhr.readyState === 4) {
+    //         const data = JSON.parse(this.responseText);
+
+    //         const img = document.createElement('img');
+    //         img.src = 'https://avatars.githubusercontent.com/u/11613311?v=4';
+    //         img.alt = 'Hitesh Choudhary';
+
+    //         const followerCount = document.createElement('p');
+    //         followerCount.textContent = data.followers;
+
+    //         document.body.appendChild(img);
+    //         document.body.appendChild(followerCount);
+    //         console.log(data.avatar_url);        
+    //         console.log(data.followers);
+    //         }
+    //     }
+    // xhr.send();
+    // });
+
+
+
+
+    // const requestUrl = 'https://api.github.com/users/hiteshchoudhary';
+    // const xhr = new XMLHttpRequest();
+    // xhr.open('GET', requestUrl);
+    // xhr.onreadystatechange = function () {
+    // console.log(xhr.readyState);  
+    // if(xhr.readyState === 4) {
+    //     const data = JSON.parse(this.responseText);
+    //     console.log(typeof data);
+    //     console.log(data);
+    //     console.log(data.followers);
+    //     }
+    // }
+    // xhr.send();
+</script>
+</html>
